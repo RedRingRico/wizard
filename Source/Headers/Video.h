@@ -10,8 +10,17 @@
 #define SCREEN_HEIGHT		200
 #define VGA_BASE_ADDRESS	0xA0000
 
+struct VIDEO_INFORMATION
+{
+	int				VGAAddress;
+	unsigned short	Width;
+	unsigned short	Height;
+};
+
 void VID_InitialiseVideo( int p_BaseAddress );
 void VID_SetVideoMode( unsigned char p_Mode );
+void VID_GetVideoInformation( struct VIDEO_INFORMATION *p_pVideoInformation );
+void VID_PlotPixelDirect( int p_Offset, unsigned char p_Colour );
 void VID_PlotPixel( int p_X, int p_Y, unsigned char p_Colour );
 void VID_ClearScreen( unsigned char p_Colour );
 

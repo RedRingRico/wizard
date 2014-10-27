@@ -2,6 +2,7 @@
 #include <conio.h>
 #include <GitVersion.h>
 #include <Video.h>
+#include <Renderer.h>
 #include <sys/nearptr.h>
 #include <stdlib.h>
 
@@ -44,6 +45,11 @@ int main( int p_Argc, char **p_ppArgv )
 	{
 		VID_PlotPixel( VGAColumn, SCREEN_HEIGHT / 2, 0x02 );
 	}
+
+	getch( );
+
+	REN_DrawLine( 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 0x04 );
+	REN_DrawLine( SCREEN_WIDTH, 0, 0, SCREEN_HEIGHT, 0x04 );
 
 	getch( );
 
