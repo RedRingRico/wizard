@@ -35,7 +35,7 @@ SYSIPATH	=
 INCPATH		=
 SYSLPATH	=	
 LIBPATH		=
-SYSLIBS		=
+SYSLIBS		= -lm
 LINKFLAGS	=
 
 ##### Debug #######
