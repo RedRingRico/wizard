@@ -39,8 +39,36 @@ void VID_PlotPixel( int p_X, int p_Y, unsigned char p_Colour )
 	g_pVGA[ p_Y * SCREEN_WIDTH + p_X ] = p_Colour;
 }
 
+void VID_FillRasterLineOffset( int p_Offset, int p_Width,
+	unsigned char *p_pColourData )
+{
+	memcpy( &g_pVGA[ p_Offset ], p_pColourData, p_Width );
+}
+
+void VID_FillRasterLineXY( int p_X, int p_Y, int p_Width,
+	unsigned char *p_pColourData )
+{
+	int ScreenOffset = ( p_Y << 8 ) + ( p_Y << 6 ) + p_X;
+
+	memcpy( &g_pVGA[ ScreenOffset ], p_pColourData, p_Width );
+}
+
 void VID_ClearScreen( unsigned char p_Colour )
 {
 	memset( g_pVGA, p_Colour , SCREEN_WIDTH * SCREEN_HEIGHT );
+}
+
+void VID_SetPaletteData( unsigned char *p_pPalette, int p_PaletteCount )
+{
+	int Index;
+
+	outp( PALETTE_INDEX, 0 );
+
+	for( Index = 0; Index < p_PaletteCount; ++Index )
+	{
+		outp( PALETTE_DATA, p_pPalette[ ( Index * 3 ) ] );
+		outp( PALETTE_DATA, p_pPalette[ ( Index * 3 ) + 1] );
+		outp( PALETTE_DATA, p_pPalette[ ( Index * 3 ) + 2 ] );
+	}
 }
 

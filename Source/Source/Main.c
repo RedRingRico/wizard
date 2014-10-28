@@ -7,6 +7,8 @@
 #include <stdlib.h>
 #include <Vector4.h>
 #include <Matrix4x4.h>
+#include <Bitmap.h>
+#include <Image.h>
 
 int main( int p_Argc, char **p_ppArgv )
 {
@@ -16,6 +18,7 @@ int main( int p_Argc, char **p_ppArgv )
 	struct VECTOR4 Vertex0T, Vertex1T, Vertex2T;
 	struct MATRIX4X4 WorldMatrix, RotationMatrix, ViewMatrix, ProjectionMatrix;
 	float Rotation = 0.0f;
+	struct IMAGE *pTestImage = NULL;
 
 	if( __djgpp_nearptr_enable( ) == 0 )
 	{
@@ -87,6 +90,27 @@ int main( int p_Argc, char **p_ppArgv )
 		MAT44_RotateY( Rotation, &RotationMatrix );
 		Rotation += 0.1f;
 	}
+
+	VID_ClearScreen( 0x0F );
+
+	getch( );
+
+	if( BMP_Load( "BAKED\\FONTS\\UM18PX.BMP", &pTestImage ) != 0 )
+	{
+		VID_SetVideoMode( VGA_TEXT_MODE );
+
+		printf( "Failed to load bitmap\n" );
+
+		getch( );
+
+		__djgpp_nearptr_disable( );
+
+		return 1;
+	}
+
+	IMG_Draw( 0, 0, pTestImage->Width, pTestImage->Height, pTestImage );
+
+	IMG_Destroy( &pTestImage );
 
 	getch( );
 
