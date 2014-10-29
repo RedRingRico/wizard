@@ -9,6 +9,7 @@
 #include <Matrix4x4.h>
 #include <Bitmap.h>
 #include <Image.h>
+#include <Text.h>
 
 int main( int p_Argc, char **p_ppArgv )
 {
@@ -19,6 +20,8 @@ int main( int p_Argc, char **p_ppArgv )
 	struct MATRIX4X4 WorldMatrix, RotationMatrix, ViewMatrix, ProjectionMatrix;
 	float Rotation = 0.0f;
 	struct IMAGE *pTestImage = NULL;
+	struct GLYPH *pGlyph;
+	struct FONT *pFont;
 
 	if( __djgpp_nearptr_enable( ) == 0 )
 	{
@@ -64,6 +67,7 @@ int main( int p_Argc, char **p_ppArgv )
 
 	getch( );
 
+	/*
 	Vertex0.X = 0.0f;
 	Vertex0.Y = 1.0f;
 	Vertex0.Z = -1.0f;
@@ -91,9 +95,9 @@ int main( int p_Argc, char **p_ppArgv )
 		Rotation += 0.1f;
 	}
 
-	VID_ClearScreen( 0x0F );
+	VID_ClearScreen( 0x00 );
 
-	getch( );
+	getch( );*/
 
 	if( BMP_Load( "BAKED\\FONTS\\UM18PX.BMP", &pTestImage ) != 0 )
 	{
@@ -108,11 +112,41 @@ int main( int p_Argc, char **p_ppArgv )
 		return 1;
 	}
 
-	IMG_Draw( 0, 0, pTestImage->Width, pTestImage->Height, pTestImage );
-
-	IMG_Destroy( &pTestImage );
+	IMG_Draw( 0, 0, pTestImage );
+	IMG_DrawSub( 150, 0, 0, 0, pTestImage->Width, pTestImage->Height,
+		pTestImage );
 
 	getch( );
+
+	VID_ClearScreen( 0x01 );
+
+	pGlyph = ( struct GLYPH * )malloc( sizeof( struct GLYPH ) );
+
+	pGlyph->Character = 'a';
+	pGlyph->X = 1;
+	pGlyph->Y = 39;
+	pGlyph->Width = 7;
+	pGlyph->Height = 8;
+	pGlyph->pNext = NULL;
+
+	if( FONT_Create( pTestImage, pGlyph, &pFont ) != 0 )
+	{
+		VID_SetVideoMode( VGA_TEXT_MODE );
+
+		printf( "Failed to create font\n" );
+
+		getch( );
+
+		__djgpp_nearptr_disable( );
+	}
+
+	TEXT_DrawCharacter( 0, 0, 'a', pFont );
+
+	getch( );
+
+	FONT_Destroy( &pFont );
+
+	IMG_Destroy( &pTestImage );
 
 	VID_SetVideoMode( VGA_TEXT_MODE );
 

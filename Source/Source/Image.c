@@ -76,23 +76,42 @@ void IMG_Destroy( struct IMAGE **p_ppImage )
 	}
 }
 
-void IMG_Draw( unsigned short p_X, unsigned short p_Y, unsigned short p_Width,
+void IMG_Draw( unsigned short p_X, unsigned short p_Y, struct IMAGE *p_pImage )
+{
+	int Index;
+	int Palette;
+	short ScreenOffset = ( p_Y << 8 ) + ( p_Y << 6 ) + p_X;
+	short ImageOffset = 0;
+
+	VID_SetPaletteData( p_pImage->Palette, p_pImage->PaletteMask * 32 );
+
+	for( Index = 0; Index < p_pImage->Height; ++Index )
+	{
+		VID_FillRasterLineOffset( ScreenOffset, p_pImage->Width,
+			&p_pImage->pData[ ImageOffset ] );
+
+		ImageOffset += p_pImage->Width;
+		ScreenOffset += SCREEN_WIDTH;
+	}
+}
+
+void IMG_DrawSub( unsigned short p_X, unsigned short p_Y,
+	unsigned short p_XOffset, unsigned short p_YOffset, unsigned short p_Width,
 	unsigned short p_Height, struct IMAGE *p_pImage )
 {
 	int Index;
 	int Palette;
 	short ScreenOffset = ( p_Y << 8 ) + ( p_Y << 6 ) + p_X;
-	short BitmapOffset = 0;
-
+	short ImageOffset = ( p_pImage->Width * p_YOffset ) + p_XOffset;
 
 	VID_SetPaletteData( p_pImage->Palette, p_pImage->PaletteMask * 32 );
 
 	for( Index = 0; Index < p_Height; ++Index )
 	{
 		VID_FillRasterLineOffset( ScreenOffset, p_Width,
-			&p_pImage->pData[ BitmapOffset ] );
+			&p_pImage->pData[ ImageOffset ] );
 
-		BitmapOffset += p_Width;
+		ImageOffset += p_pImage->Width;
 		ScreenOffset += SCREEN_WIDTH;
 	}
 }

@@ -27,7 +27,7 @@ int FONT_AddGlyph( struct GLYPH *p_pGlyph, struct GLYPH *p_pGlyphSet )
 	return 0;
 }
 
-int FONT_CreateFont( struct IMAGE *p_pImage, struct GLYPH *p_pGlyphSet,
+int FONT_Create( struct IMAGE *p_pImage, struct GLYPH *p_pGlyphSet,
 	struct FONT **p_ppFont )
 {
 	if( p_pImage == NULL )
