@@ -62,7 +62,7 @@ int IMG_Create( unsigned char *p_pPalette, unsigned short p_PaletteCount,
 }
 
 void IMG_Destroy( struct IMAGE **p_ppImage )
-{/*
+{
 	if( ( *p_ppImage ) )
 	{
 		if( ( *p_ppImage )->pData )
@@ -70,11 +70,10 @@ void IMG_Destroy( struct IMAGE **p_ppImage )
 			free( ( *p_ppImage )->pData );
 			( *p_ppImage )->pData = NULL;
 		}
-		*/
-		/*
-		free( p_pImage );
-		p_pImage = NULL;*/
-	/*}*/
+		
+		free( ( *p_ppImage ) );
+		( *p_ppImage ) = NULL;
+	}
 }
 
 void IMG_Draw( unsigned short p_X, unsigned short p_Y, unsigned short p_Width,
