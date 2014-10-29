@@ -1,6 +1,8 @@
 #include <Image.h>
 #include <Video.h>
 #include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
 
 int IMG_Create( unsigned char *p_pPalette, unsigned short p_PaletteCount,
 	unsigned short p_Width, unsigned short p_Height, struct IMAGE **p_ppImage )
@@ -36,9 +38,8 @@ int IMG_Create( unsigned char *p_pPalette, unsigned short p_PaletteCount,
 	}
 
 	( *p_ppImage ) = ( struct IMAGE * )malloc( sizeof( struct IMAGE ) );
-
-	( *p_ppImage )->pData = ( unsigned char * )malloc( ( *p_ppImage )->Width *
-		( *p_ppImage )->Height );
+	
+	( *p_ppImage )->pData = ( unsigned char * )malloc( p_Width * p_Height );
 
 	if( ( *p_ppImage )->pData == NULL )
 	{
@@ -80,8 +81,12 @@ void IMG_Draw( unsigned short p_X, unsigned short p_Y, unsigned short p_Width,
 	unsigned short p_Height, struct IMAGE *p_pImage )
 {
 	int Index;
+	int Palette;
 	short ScreenOffset = ( p_Y << 8 ) + ( p_Y << 6 ) + p_X;
 	short BitmapOffset = 0;
+
+
+	VID_SetPaletteData( p_pImage->Palette, p_pImage->PaletteMask * 32 );
 
 	for( Index = 0; Index < p_Height; ++Index )
 	{
