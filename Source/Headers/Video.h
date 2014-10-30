@@ -24,7 +24,11 @@ void VID_SetVideoMode( unsigned char p_Mode );
 void VID_GetVideoInformation( struct VIDEO_INFORMATION *p_pVideoInformation );
 void VID_PlotPixelDirect( int p_Offset, unsigned char p_Colour );
 void VID_PlotPixel( int p_X, int p_Y, unsigned char p_Colour );
+void VID_FillRasterLineOffset( int p_Offset, int p_Width,
+	unsigned char *p_pColourData );
 void VID_FillRasterLineXY( int p_X, int p_Y, int p_Width,
+	unsigned char *p_pColourData );
+void VID_FillRasterLineTransparentOffset( int p_Offset, int p_Width,
 	unsigned char *p_pColourData );
 void VID_ClearScreen( unsigned char p_Colour );
 void VID_SetPaletteData( unsigned char *p_pPalette, int p_PaletteCount );

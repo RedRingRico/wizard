@@ -28,7 +28,7 @@ int TEXT_DrawCharacter( int p_X, int p_Y, char p_Character, int *p_pAdvance,
 		pGlyph = pGlyph->pNext;
 	}
 
-	IMG_DrawSub( p_X, p_Y - pGlyph->Bearing, pGlyph->X, pGlyph->Y,
+	IMG_DrawSubTransparent( p_X, p_Y - pGlyph->Bearing, pGlyph->X, pGlyph->Y,
 		pGlyph->Width, pGlyph->Height, p_pFont->pImage );
 
 	if( p_pAdvance )

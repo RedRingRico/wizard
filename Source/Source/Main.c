@@ -115,8 +115,7 @@ int main( int p_Argc, char **p_ppArgv )
 	}
 
 	IMG_Draw( 0, 0, pTestImage );
-	IMG_DrawSub( 150, 0, 0, 0, pTestImage->Width, pTestImage->Height,
-		pTestImage );
+	IMG_DrawTransparent( 150, 0, pTestImage );
 
 	getch( );
 
@@ -174,9 +173,9 @@ int main( int p_Argc, char **p_ppArgv )
 	pGlyph[ 5 ].X = 1;
 	pGlyph[ 5 ].Y = 57;
 	pGlyph[ 5 ].Advance = 8;
-	pGlyph[ 5 ].Bearing = 9;
+	pGlyph[ 5 ].Bearing = 8;
 	pGlyph[ 5 ].Width = 7;
-	pGlyph[ 5 ].Height = 9;
+	pGlyph[ 5 ].Height = 8;
 	pGlyph[ 5 ].pNext = &pGlyph[ 6 ];
 
 	pGlyph[ 6 ].Character = 'g';

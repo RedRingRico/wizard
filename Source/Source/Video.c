@@ -53,6 +53,22 @@ void VID_FillRasterLineXY( int p_X, int p_Y, int p_Width,
 	memcpy( &g_pVGA[ ScreenOffset ], p_pColourData, p_Width );
 }
 
+void VID_FillRasterLineTransparentOffset( int p_Offset, int p_Width,
+	unsigned char *p_pColourData )
+{
+	int Index;
+
+	for( Index = 0; Index < p_Width; ++Index )
+	{
+		if( p_pColourData[ Index ] != 0xFF )
+		{
+			g_pVGA[ p_Offset ] = p_pColourData[ Index ];
+		}
+
+		++p_Offset;
+	}
+}
+
 void VID_ClearScreen( unsigned char p_Colour )
 {
 	memset( g_pVGA, p_Colour , SCREEN_WIDTH * SCREEN_HEIGHT );

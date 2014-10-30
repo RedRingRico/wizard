@@ -26,10 +26,6 @@ struct IMAGE
 	 * garbage
 	 */
 	unsigned char	PaletteMask;
-	/* The punch through colour is defined as the value not visible (such as a
-	 * background for a sprite)
-	 */
-	unsigned char	PunchThroughColour;
 	unsigned short	Width;
 	unsigned short	Height;
 	unsigned char	*pData;
@@ -44,6 +40,13 @@ void IMG_Draw( unsigned short p_X, unsigned short p_Y,
 	struct IMAGE *p_pImage );
 
 void IMG_DrawSub( unsigned short p_X, unsigned short p_Y,
+	unsigned short p_XOffset, unsigned short p_YOffset, unsigned short p_Width,
+	unsigned short p_Height, struct IMAGE *p_pImage );
+
+void IMG_DrawTransparent( unsigned short p_X, unsigned short p_Y,
+	struct IMAGE *p_pImage );
+
+void IMG_DrawSubTransparent( unsigned short p_X, unsigned short p_Y,
 	unsigned short p_XOffset, unsigned short p_YOffset, unsigned short p_Width,
 	unsigned short p_Height, struct IMAGE *p_pImage );
 
