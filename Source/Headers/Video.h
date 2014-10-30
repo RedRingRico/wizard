@@ -30,6 +30,8 @@ void VID_FillRasterLineXY( int p_X, int p_Y, int p_Width,
 	unsigned char *p_pColourData );
 void VID_FillRasterLineTransparentOffset( int p_Offset, int p_Width,
 	unsigned char *p_pColourData );
+void VID_FillRasterLineTransparentXY( int p_X, int p_Y, int p_Width,
+	unsigned char *p_pColourData );
 void VID_ClearScreen( unsigned char p_Colour );
 void VID_SetPaletteData( unsigned char *p_pPalette, int p_PaletteCount );
 
