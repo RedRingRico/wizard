@@ -10,6 +10,8 @@ struct GLYPH
 {
 	int				X;
 	int				Y;
+	int				Advance;
+	int				Bearing;
 	int				Width;
 	int				Height;
 	char			Character;

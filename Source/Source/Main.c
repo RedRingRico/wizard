@@ -122,14 +122,98 @@ int main( int p_Argc, char **p_ppArgv )
 
 	VID_ClearScreen( 0x01 );
 
-	pGlyph = ( struct GLYPH * )malloc( sizeof( struct GLYPH ) );
+	/* I desprately need to create a font format */
+	pGlyph = ( struct GLYPH * )malloc( sizeof( struct GLYPH ) * 10 );
 
-	pGlyph->Character = 'a';
-	pGlyph->X = 1;
-	pGlyph->Y = 39;
-	pGlyph->Width = 7;
-	pGlyph->Height = 8;
-	pGlyph->pNext = NULL;
+	pGlyph[ 0 ].Character = 'T';
+	pGlyph[ 0 ].X = 54;
+	pGlyph[ 0 ].Y = 18;
+	pGlyph[ 0 ].Advance = 9;
+	pGlyph[ 0 ].Bearing = 11;
+	pGlyph[ 0 ].Width = 8;
+	pGlyph[ 0 ].Height = 11;
+	pGlyph[ 0 ].pNext = &pGlyph[ 1 ];
+
+	pGlyph[ 1 ].Character = 'e';
+	pGlyph[ 1 ].X = 37;
+	pGlyph[ 1 ].Y = 39;
+	pGlyph[ 1 ].Advance = 8;
+	pGlyph[ 1 ].Bearing = 8;
+	pGlyph[ 1 ].Width = 7;
+	pGlyph[ 1 ].Height = 8;
+	pGlyph[ 1 ].pNext = &pGlyph[ 2 ];
+
+	pGlyph[ 2 ].Character = 's';
+	pGlyph[ 2 ].X = 46;
+	pGlyph[ 2 ].Y = 57;
+	pGlyph[ 2 ].Advance = 8;
+	pGlyph[ 2 ].Bearing = 8;
+	pGlyph[ 2 ].Width = 7;
+	pGlyph[ 2 ].Height = 8;
+	pGlyph[ 2 ].pNext = &pGlyph[ 3 ];
+
+	pGlyph[ 3 ].Character = 't';
+	pGlyph[ 3 ].X = 55;
+	pGlyph[ 3 ].Y = 55;
+	pGlyph[ 3 ].Advance = 8;
+	pGlyph[ 3 ].Bearing = 10;
+	pGlyph[ 3 ].Width = 7;
+	pGlyph[ 3 ].Height = 10;
+	pGlyph[ 3 ].pNext = &pGlyph[ 4 ];
+
+	pGlyph[ 4 ].Character = 'i';
+	pGlyph[ 4 ].X = 73;
+	pGlyph[ 4 ].Y = 35;
+	pGlyph[ 4 ].Advance = 8;
+	pGlyph[ 4 ].Bearing = 12;
+	pGlyph[ 4 ].Width = 7;
+	pGlyph[ 4 ].Height = 12;
+	pGlyph[ 4 ].pNext = &pGlyph[ 5 ];
+
+	pGlyph[ 5 ].Character = 'n';
+	pGlyph[ 5 ].X = 1;
+	pGlyph[ 5 ].Y = 57;
+	pGlyph[ 5 ].Advance = 8;
+	pGlyph[ 5 ].Bearing = 9;
+	pGlyph[ 5 ].Width = 7;
+	pGlyph[ 5 ].Height = 9;
+	pGlyph[ 5 ].pNext = &pGlyph[ 6 ];
+
+	pGlyph[ 6 ].Character = 'g';
+	pGlyph[ 6 ].X = 55;
+	pGlyph[ 6 ].Y = 39;
+	pGlyph[ 6 ].Advance = 9;
+	pGlyph[ 6 ].Bearing = 8;
+	pGlyph[ 6 ].Width = 8;
+	pGlyph[ 6 ].Height = 11;
+	pGlyph[ 6 ].pNext = &pGlyph[ 7 ];
+
+	pGlyph[ 7 ].Character = ' ';
+	pGlyph[ 7 ].X = 0;
+	pGlyph[ 7 ].Y = 0;
+	pGlyph[ 7 ].Advance = 6;
+	pGlyph[ 7 ].Bearing = 0;
+	pGlyph[ 7 ].Width = 1;
+	pGlyph[ 7 ].Height = 1;
+	pGlyph[ 7 ].pNext = &pGlyph[ 8 ];
+
+	pGlyph[ 8 ].Character = 'F';
+	pGlyph[ 8 ].X = 46;
+	pGlyph[ 8 ].Y = 0;
+	pGlyph[ 8 ].Advance = 8;
+	pGlyph[ 8 ].Bearing = 11;
+	pGlyph[ 8 ].Width = 7;
+	pGlyph[ 8 ].Height = 11;
+	pGlyph[ 8 ].pNext = &pGlyph[ 9 ];
+
+	pGlyph[ 9 ].Character = 'o';
+	pGlyph[ 9 ].X = 10;
+	pGlyph[ 9 ].Y = 57;
+	pGlyph[ 9 ].Advance = 8;
+	pGlyph[ 9 ].Bearing = 8;
+	pGlyph[ 9 ].Width = 7;
+	pGlyph[ 9 ].Height = 8;
+	pGlyph[ 9 ].pNext = NULL;
 
 	if( FONT_Create( pTestImage, pGlyph, &pFont ) != 0 )
 	{
@@ -142,7 +226,7 @@ int main( int p_Argc, char **p_ppArgv )
 		__djgpp_nearptr_disable( );
 	}
 
-	TEXT_DrawCharacter( 0, 0, 'a', pFont );
+	TEXT_DrawString( 10, 20, "Testing Font", pFont );
 
 	getch( );
 
