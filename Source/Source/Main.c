@@ -101,6 +101,8 @@ int main( int p_Argc, char **p_ppArgv )
 
 	VID_ClearScreen( 0x00 );
 
+	VID_LoadPaletteData( "BAKED\\PALETTE.PAL" );
+
 	if( BMP_Load( "BAKED\\FONTS\\UM18PX.BMP", &pTestImage ) != 0 )
 	{
 		VID_SetVideoMode( VGA_TEXT_MODE );

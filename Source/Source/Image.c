@@ -4,29 +4,9 @@
 #include <stdio.h>
 #include <string.h>
 
-int IMG_Create( unsigned char *p_pPalette, unsigned short p_PaletteCount,
-	unsigned short p_Width, unsigned short p_Height, struct IMAGE **p_ppImage )
+int IMG_Create( unsigned short p_Width, unsigned short p_Height,
+	struct IMAGE **p_ppImage )
 {
-	if( p_PaletteCount > 256 )
-	{
-		return 1;
-	}
-
-	if( p_pPalette == NULL )
-	{
-		return 1;
-	}
-
-	if( p_PaletteCount == 0 )
-	{
-		return 1;
-	}
-
-	if( p_PaletteCount > 1024 )
-	{
-		return 1;
-	}
-
 	if( p_Width == 0 )
 	{
 		return 1;
@@ -45,15 +25,6 @@ int IMG_Create( unsigned char *p_pPalette, unsigned short p_PaletteCount,
 	{
 		return 1;
 	}
-
-	memcpy( ( *p_ppImage )->Palette, p_pPalette, p_PaletteCount * 3 );
-
-	/* Set the palette mask to indicate the range of colours to replace
-	 * As there are 32 colours per bank, use the integer value from the divide
-	 * and if the modulo is not zero, add a one to indicate the next bank
-	 */
-	( *p_ppImage )->PaletteMask = ( p_PaletteCount / 32 ) +
-		( p_PaletteCount % 32 > 0 ? 1 : 0 );
 
 	( *p_ppImage )->Width = p_Width;
 	( *p_ppImage )->Height = p_Height;
@@ -83,8 +54,6 @@ void IMG_Draw( unsigned short p_X, unsigned short p_Y, struct IMAGE *p_pImage )
 	short ScreenOffset = ( p_Y << 8 ) + ( p_Y << 6 ) + p_X;
 	short ImageOffset = 0;
 
-	VID_SetPaletteData( p_pImage->Palette, p_pImage->PaletteMask * 32 );
-
 	for( Index = 0; Index < p_pImage->Height; ++Index )
 	{
 		VID_FillRasterLineOffset( ScreenOffset, p_pImage->Width,
@@ -104,8 +73,6 @@ void IMG_DrawSub( unsigned short p_X, unsigned short p_Y,
 	short ScreenOffset = ( p_Y << 8 ) + ( p_Y << 6 ) + p_X;
 	short ImageOffset = ( p_pImage->Width * p_YOffset ) + p_XOffset;
 
-	VID_SetPaletteData( p_pImage->Palette, p_pImage->PaletteMask * 32 );
-
 	for( Index = 0; Index < p_Height; ++Index )
 	{
 		VID_FillRasterLineOffset( ScreenOffset, p_Width,
@@ -123,8 +90,6 @@ void IMG_DrawTransparent( unsigned short p_X, unsigned short p_Y,
 	int Palette;
 	short ScreenOffset = ( p_Y << 8 ) + ( p_Y << 6 ) + p_X;
 	short ImageOffset = 0;
-
-	VID_SetPaletteData( p_pImage->Palette, p_pImage->PaletteMask * 32 );
 
 	for( Index = 0; Index < p_pImage->Height; ++Index )
 	{
@@ -144,8 +109,6 @@ void IMG_DrawSubTransparent( unsigned short p_X, unsigned short p_Y,
 	int Palette;
 	short ScreenOffset = ( p_Y << 8 ) + ( p_Y << 6 ) + p_X;
 	short ImageOffset = ( p_pImage->Width * p_YOffset ) + p_XOffset;
-
-	VID_SetPaletteData( p_pImage->Palette, p_pImage->PaletteMask * 32 );
 
 	for( Index = 0; Index < p_Height; ++Index )
 	{

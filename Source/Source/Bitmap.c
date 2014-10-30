@@ -76,8 +76,7 @@ int BMP_Load( const char *p_pFileName, struct IMAGE **p_ppImage )
 		PaletteData[ ( PaletteIndex * 3 ) + 2 ] = TmpPaletteData[ 0 ] >> 2;
 	}
 
-	if( IMG_Create( PaletteData, BitmapHeader.ColoursUsed, BitmapHeader.Width,
-		BitmapHeader.Height, p_ppImage ) != 0 )
+	if( IMG_Create( BitmapHeader.Width,	BitmapHeader.Height, p_ppImage ) != 0 )
 	{
 		FILE_Close( &pBMPFile );
 

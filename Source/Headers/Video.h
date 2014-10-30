@@ -34,6 +34,7 @@ void VID_FillRasterLineTransparentXY( int p_X, int p_Y, int p_Width,
 	unsigned char *p_pColourData );
 void VID_ClearScreen( unsigned char p_Colour );
 void VID_SetPaletteData( unsigned char *p_pPalette, int p_PaletteCount );
+int VID_LoadPaletteData( const char *p_pFileName );
 
 #endif /* __WIZARD_VIDEO_H__ */
 

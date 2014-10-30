@@ -1,6 +1,8 @@
 #include <Video.h>
+#include <File.h>
 #include <dos.h>
 #include <string.h>
+#include <stdio.h>
 
 static unsigned char *g_pVGA = ( unsigned char * )0x00000000;
 
@@ -103,5 +105,39 @@ void VID_SetPaletteData( unsigned char *p_pPalette, int p_PaletteCount )
 		outp( PALETTE_DATA, p_pPalette[ ( Index * 3 ) + 1] );
 		outp( PALETTE_DATA, p_pPalette[ ( Index * 3 ) + 2 ] );
 	}
+}
+
+int VID_LoadPaletteData( const char *p_pFileName )
+{
+	FILE *pFile = NULL;
+	int PaletteCount = 0;
+
+	FILE_Open( p_pFileName, "rb", NULL, &pFile );
+
+	fread( &PaletteCount, sizeof( int ), 1, pFile );
+
+	if( ( PaletteCount > 0 ) && ( PaletteCount <= 256 ) )
+	{
+		int Index;
+		unsigned char *pPalette =
+			( unsigned char * )malloc( PaletteCount * 3 );
+		fread( pPalette, PaletteCount, 3, pFile );
+
+		outp( PALETTE_INDEX, 0 );
+
+		for( Index = 0; Index < PaletteCount; ++Index )
+		{
+			outp( PALETTE_DATA, pPalette[ ( Index * 3 ) ] );
+			outp( PALETTE_DATA, pPalette[ ( Index * 3 ) + 1 ] );
+			outp( PALETTE_DATA, pPalette[ ( Index * 3 ) + 2 ] );
+		}
+
+		free( pPalette );
+		pPalette = NULL;
+	}
+
+	FILE_Close( &pFile );
+
+	return 0;
 }
 

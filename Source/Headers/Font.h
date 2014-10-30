@@ -32,5 +32,7 @@ int FONT_Create( struct IMAGE *p_pImage, struct GLYPH *p_pGlyphSet,
 	struct FONT **p_ppFont );
 void FONT_Destroy( struct FONT **p_ppFont );
 
+int FONT_Load( const char *p_pFileName, struct FONT **p_ppFont );
+
 #endif /* __WIZARD_FONT_H__ */
 
